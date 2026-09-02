@@ -27,11 +27,14 @@ const latest = featured.length ? featured : posts.slice(0, 3);
     <div class="book-spine" aria-hidden="true"></div>
 
     <div class="book-page book-page-right">
-      <img
-        class="watercolor-pinwheel"
-        src="https://raw.githubusercontent.com/its-loman/its-loman/main/assets/pinwheel-small.png"
-        alt="Watercolor paper pinwheel"
-      />
+      <div class="watercolor-pinwheel" role="img" aria-label="Watercolor paper pinwheel">
+        <img
+          class="watercolor-pinwheel-source"
+          src="https://raw.githubusercontent.com/its-loman/its-loman/main/assets/loman-header.png"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
       <span class="annotation annotation-a">paper pinwheel<br />(well-loved)</span>
       <span class="annotation annotation-b">simple things,<br />often overlooked</span>
       <span class="annotation annotation-c">keeps turning<br />in the wind.</span>
