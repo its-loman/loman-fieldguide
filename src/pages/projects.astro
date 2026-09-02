@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = [
+  {
+    n: 'P–01',
+    title: 'Synapse',
+    desc: 'A front-end framework experiment around signals, immutable state, and rendering without a virtual DOM.',
+    href: 'https://github.com/its-loman/Synapse',
+  },
+  {
+    n: 'P–02',
+    title: 'Qwik Doc Viewer',
+    desc: 'Experiments around Qwik, documentation tooling, and framework ergonomics.',
+    href: 'https://github.com/its-loman/qwik-doc-viewer',
+  },
+  {
+    n: 'P–03',
+    title: 'RsLib Framework',
+    desc: 'Framework and tooling exploration centered around modern JavaScript architecture.',
+    href: 'https://github.com/its-loman/RsLib-Framework',
+  },
+  {
+    n: 'P–04',
+    title: 'Astro Demo',
+    desc: 'A place for poking at Astro, rendering strategies, and the modern web.',
+    href: 'https://github.com/its-loman/AstroDemo',
+  },
+];
+---
+
+<BaseLayout title="Projects — loman">
+  <section class="section page-lead">
+    <div class="catalogue-label">Selected specimens</div>
+    <h1>Things I've made while trying to understand something.</h1>
+  </section>
+
+  <section class="section project-list">
+    {projects.map(project => (
+      <article class="project">
+        <div class="project-number">{project.n}</div>
+        <div>
+          <h2>{project.title}</h2>
+          <p>{project.desc}</p>
+          <a href={project.href}>examine on GitHub ↗</a>
+        </div>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

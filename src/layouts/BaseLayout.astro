@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'loman — field notes from the web',
+  description = 'Notes, experiments, essays, and observations about code, systems, and the web.',
+} = Astro.props;
+
+const site = Astro.site ?? Astro.url.origin;
+const canonical = new URL(Astro.url.pathname, site);
+const path = Astro.url.pathname;
+const current = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f3ecd9" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">
+          <img src="/favicon.svg" alt="" />
+          <span>loman</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <a href="/field-notes/" aria-current={current('/field-notes/') ? 'page' : undefined}>field notes</a>
+          <a href="/projects/" aria-current={current('/projects/') ? 'page' : undefined}>projects</a>
+          <a href="/about/" aria-current={current('/about/') ? 'page' : undefined}>about</a>
+          <a href="https://github.com/its-loman">github ↗</a>
+        </nav>
+      </header>
+
+      <main class="paper">
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <img src="/favicon.svg" alt="" />
+        <div>observe · tinker · understand</div>
+        <div class="copyright">© {new Date().getFullYear()} loman</div>
+      </footer>
+    </div>
+  </body>
+</html>

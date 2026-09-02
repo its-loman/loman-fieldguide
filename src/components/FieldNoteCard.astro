@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'fieldNotes'>;
+}
+
+const { post } = Astro.props;
+const date = post.data.pubDate.toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+<a class="note-card" href={`/field-notes/${post.id}/`}>
+  <div class="note-meta">Field Note {post.data.noteNumber} · {date}</div>
+  <h3>{post.data.title}</h3>
+  <p>{post.data.description}</p>
+  <div class="tags">
+    {post.data.tags.map(tag => <span class="tag">{tag}</span>)}
+  </div>
+</a>
