@@ -8,69 +8,38 @@ const posts = (await getCollection('fieldNotes', ({ data }) => !data.draft))
 
 const featured = posts.filter(post => post.data.featured).slice(0, 3);
 const latest = featured.length ? featured : posts.slice(0, 3);
-const hostname = new URL(Astro.site ?? Astro.url.origin).hostname;
 ---
 
-<BaseLayout hideHeader>
-  <section class="concept-hero" aria-label="Loman field guide">
-    <div class="browser-chrome" aria-hidden="true">
-      <div class="traffic-lights">
-        <span class="dot dot-rust"></span>
-        <span class="dot dot-ochre"></span>
-        <span class="dot dot-olive"></span>
+<BaseLayout>
+  <section class="field-book" aria-label="Loman field notebook">
+    <div class="book-page book-page-left">
+      <div class="book-rule"></div>
+      <div class="field-label">Field Note<br />No. L–001</div>
+      <div class="book-title">
+        <h1>loman</h1>
+        <p>I make things for the web and<br />keep notes along the way.</p>
+        <span class="rust-line"></span>
+        <em>notes, experiments, essays, and observations<br />about code, systems, and the web.</em>
       </div>
-
-      <div class="address-bar">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7 10V8a5 5 0 0 1 10 0v2m-9 0h8a2 2 0 0 1 2 2v7H6v-7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>{hostname}</span>
-      </div>
-
-      <div class="chrome-balance"></div>
+      <div class="book-date"><span>DATE</span><br />ONGOING</div>
     </div>
 
-    <div class="hero-stage">
-      <div class="hero-copy">
-        <div class="field-label">Field Note<br />No. L–001</div>
+    <div class="book-spine" aria-hidden="true"></div>
 
-        <div class="hero-wordmark">
-          <h1>loman</h1>
-          <p>notes, essays, and experiments<br />about code, systems, and the web.</p>
-        </div>
-
-        <nav class="hero-nav" aria-label="Home">
-          <a class="active" href="/field-notes/">articles</a>
-          <a href="#field-notes">notes</a>
-          <a href="/projects/">projects</a>
-          <a href="/about/">about</a>
-        </nav>
-      </div>
-
-      <div class="hero-specimen">
-        <svg class="compass" viewBox="0 0 100 100" aria-hidden="true">
-          <circle cx="50" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="1.2"/>
-          <circle cx="50" cy="50" r="3" fill="currentColor"/>
-          <path d="M50 8 56 44 50 50 44 44 50 8Zm0 84-6-36 6-6 6 6-6 36ZM8 50l36-6 6 6-6 6-36-6Zm84 0-36 6-6-6 6-6 36 6Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-          <path d="M50 18 54 46 50 50 46 46 50 18Z" fill="currentColor"/>
-        </svg>
-
-        <div class="pinwheel-wrap">
-          <img
-            class="watercolor-pinwheel"
-            src="https://raw.githubusercontent.com/its-loman/its-loman/main/assets/pinwheel-small.png"
-            alt="Watercolor paper pinwheel"
-          />
-        </div>
-
-        <span class="annotation annotation-a">paper pinwheel<br />(well-loved)</span>
-        <span class="annotation annotation-b">keeps turning<br />in the wind</span>
-        <span class="hero-motto">OBSERVE. &nbsp; TINKER. &nbsp; UNDERSTAND.</span>
-      </div>
+    <div class="book-page book-page-right">
+      <img
+        class="watercolor-pinwheel"
+        src="https://raw.githubusercontent.com/its-loman/its-loman/main/assets/pinwheel-small.png"
+        alt="Watercolor paper pinwheel"
+      />
+      <span class="annotation annotation-a">paper pinwheel<br />(well-loved)</span>
+      <span class="annotation annotation-b">simple things,<br />often overlooked</span>
+      <span class="annotation annotation-c">keeps turning<br />in the wind.</span>
+      <span class="book-motto">OBSERVE. &nbsp; TINKER. &nbsp; UNDERSTAND.</span>
     </div>
   </section>
 
-  <section class="section intro-grid concept-intro">
+  <section class="section intro-grid">
     <div>
       <div class="kicker">Field guide / ongoing</div>
       <h2>A small place for things worth noticing.</h2>
@@ -86,7 +55,7 @@ const hostname = new URL(Astro.site ?? Astro.url.origin).hostname;
     </aside>
   </section>
 
-  <section class="section" id="field-notes">
+  <section class="section">
     <div class="catalogue-label">Recent observations</div>
     <h2>Field notes</h2>
     <div class="note-grid">

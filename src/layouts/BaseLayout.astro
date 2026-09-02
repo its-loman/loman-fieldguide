@@ -4,13 +4,11 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
-  hideHeader?: boolean;
 }
 
 const {
   title = 'loman — field notes from the web',
   description = 'Notes, experiments, essays, and observations about code, systems, and the web.',
-  hideHeader = false,
 } = Astro.props;
 
 const site = Astro.site ?? Astro.url.origin;
@@ -37,21 +35,19 @@ const current = (href: string) => href === '/' ? path === '/' : path.startsWith(
   </head>
   <body>
     <div class="site-shell">
-      {!hideHeader && (
-        <header class="site-header">
-          <a class="brand" href="/">
-            <img src="/favicon.svg" alt="" />
-            <span>loman</span>
-          </a>
+      <header class="site-header">
+        <a class="brand" href="/">
+          <img src="/favicon.svg" alt="" />
+          <span>loman</span>
+        </a>
 
-          <nav aria-label="Primary navigation">
-            <a href="/field-notes/" aria-current={current('/field-notes/') ? 'page' : undefined}>field notes</a>
-            <a href="/projects/" aria-current={current('/projects/') ? 'page' : undefined}>projects</a>
-            <a href="/about/" aria-current={current('/about/') ? 'page' : undefined}>about</a>
-            <a href="https://github.com/its-loman">github ↗</a>
-          </nav>
-        </header>
-      )}
+        <nav aria-label="Primary navigation">
+          <a href="/field-notes/" aria-current={current('/field-notes/') ? 'page' : undefined}>field notes</a>
+          <a href="/projects/" aria-current={current('/projects/') ? 'page' : undefined}>projects</a>
+          <a href="/about/" aria-current={current('/about/') ? 'page' : undefined}>about</a>
+          <a href="https://github.com/its-loman">github ↗</a>
+        </nav>
+      </header>
 
       <main class="paper">
         <slot />
