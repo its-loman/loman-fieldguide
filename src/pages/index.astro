@@ -1,87 +1,49 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FieldNoteCard from '../components/FieldNoteCard.astro';
-
+import Doodle from '../components/Doodle.astro';
+import { projects } from '../data/projects';
 const posts = (await getCollection('fieldNotes', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const featured = posts.filter(post => post.data.featured).slice(0, 3);
-const latest = featured.length ? featured : posts.slice(0, 3);
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 3);
 ---
-
 <BaseLayout>
-  <section class="field-book" aria-label="Loman field notebook">
-    <div class="book-page book-page-left">
-      <div class="book-rule"></div>
-      <div class="field-label">Field Note<br />No. L–001</div>
-      <div class="book-title">
-        <h1>loman</h1>
-        <p>I make things for the web and<br />keep notes along the way.</p>
-        <span class="rust-line"></span>
-        <em>notes, experiments, essays, and observations<br />about code, systems, and the web.</em>
+  <section class="hero">
+    <div class="hero-mascot">
+      <img src="/images/loman-snail.webp" width="420" height="280" alt="A sleepy snail in purple headphones, carrying a spiral notebook shell." fetchpriority="high" />
+      <span class="mascot-note">taking the scenic route.</span>
+    </div>
+    <div class="hero-copy">
+      <h1><span class="scribble-underline">software, notes, and<br class="hero-break" /> small strange tools</span></h1>
+      <p>a personal site for code, experiments, and mild suspicion of unnecessary complexity.</p>
+      <div class="paper-tags" aria-label="Explore the notebook">
+        <a href="/field-notes/"># programming</a><a href="/projects/"># experiments</a><a href="/projects/"># tools</a><a href="/field-notes/"># notes</a>
       </div>
-      <div class="book-date"><span>DATE</span><br />ONGOING</div>
     </div>
-
-    <div class="book-spine" aria-hidden="true"></div>
-
-    <div class="book-page book-page-right">
-      <div class="watercolor-pinwheel" role="img" aria-label="Watercolor paper pinwheel">
-        <img
-          class="watercolor-pinwheel-source"
-          src="https://raw.githubusercontent.com/its-loman/its-loman/main/assets/loman-header.png"
-          alt=""
-          aria-hidden="true"
-        />
+  </section>
+  <div class="home-columns">
+    <section class="home-section" aria-labelledby="recent-notes">
+      <div class="section-heading pencil-rule"><Doodle name="notebook" /><h2 id="recent-notes"><span class="highlighter">Recent Notes</span></h2></div>
+      <div class="note-rows">
+        {posts.map(post => (
+          <a class="note-row" href={`/field-notes/${post.id}/`}>
+            <Doodle name="note" /><span>{post.data.title}</span>
+            <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-US', { timeZone: 'UTC', month: 'numeric', day: 'numeric', year: 'numeric' })}</time>
+          </a>
+        ))}
       </div>
-      <span class="annotation annotation-a">paper pinwheel<br />(well-loved)</span>
-      <span class="annotation annotation-b">simple things,<br />often overlooked</span>
-      <span class="annotation annotation-c">keeps turning<br />in the wind.</span>
-      <span class="book-motto">OBSERVE. &nbsp; TINKER. &nbsp; UNDERSTAND.</span>
-    </div>
-  </section>
-
-  <section class="section intro-grid">
-    <div>
-      <div class="kicker">Field guide / ongoing</div>
-      <h2>A small place for things worth noticing.</h2>
-      <p>
-        I make software, pull systems apart, and write down the things I want to remember.
-        This is less a portfolio than a working field guide: notes on rendering, performance,
-        frameworks, tooling, and whatever else I wander into.
-      </p>
-    </div>
-
-    <aside class="margin-note">
-      The goal is not to sound certain. The goal is to notice carefully enough that the next version of the idea is better.
-    </aside>
-  </section>
-
-  <section class="section">
-    <div class="catalogue-label">Recent observations</div>
-    <h2>Field notes</h2>
-    <div class="note-grid">
-      {latest.map(post => <FieldNoteCard post={post} />)}
-    </div>
-    <p class="section-link"><a href="/field-notes/">open the full index →</a></p>
-  </section>
-
-  <section class="section field-entry">
-    <div class="catalogue-label">Field Note L–002 · Current interests</div>
-    <h2>Things I keep circling back to.</h2>
-
-    <div class="interest-groups">
-      <p><strong>architecture & rendering</strong><span>front-end architecture · SSR / SSG · islands · resumability</span></p>
-      <p><strong>performance</strong><span>code-splitting · bundle optimization · browser performance</span></p>
-      <p><strong>systems & tooling</strong><span>framework internals · developer tooling · reactive systems</span></p>
-    </div>
-
-    <aside class="observation">
-      <span>Current observation</span>
-      The web keeps getting more capable while our abstractions keep getting heavier.
-      I’m interested in the places where we can remove machinery instead of adding more of it.
-      <em>working theory — subject to revision</em>
-    </aside>
-  </section>
+      <a class="section-link" href="/field-notes/"><Doodle name="arrow" /><span>View all notes</span></a>
+    </section>
+    <section class="home-section" aria-labelledby="recent-projects">
+      <div class="section-heading pencil-rule"><Doodle name="laptop" /><h2 id="recent-projects"><span class="highlighter">Recent Projects</span></h2></div>
+      <div class="project-rows">
+        {projects.slice(0, 3).map(project => (
+          <article class="project-row">
+            <Doodle name={project.icon} /><div><h3><a href={project.href}>{project.title}</a></h3><p>{project.desc}</p></div>
+            <a class="code-link" href={project.href} aria-label={`View ${project.title} code on GitHub`}>code ↗</a>
+          </article>
+        ))}
+      </div>
+      <a class="section-link" href="/projects/"><Doodle name="arrow" /><span>View all projects</span></a>
+    </section>
+  </div>
 </BaseLayout>

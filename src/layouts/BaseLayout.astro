@@ -1,20 +1,14 @@
 ---
 import '../styles/global.css';
 
-interface Props {
-  title?: string;
-  description?: string;
-}
-
+interface Props { title?: string; description?: string; }
 const {
-  title = 'loman — field notes from the web',
-  description = 'Notes, experiments, essays, and observations about code, systems, and the web.',
+  title = 'loman — software, notes, and small strange tools',
+  description = 'A personal site for code, experiments, and mild suspicion of unnecessary complexity.',
 } = Astro.props;
-
-const site = Astro.site ?? Astro.url.origin;
-const canonical = new URL(Astro.url.pathname, site);
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const path = Astro.url.pathname;
-const current = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+const current = (href: string) => path.startsWith(href);
 ---
 
 <!doctype html>
@@ -23,41 +17,42 @@ const current = (href: string) => href === '/' ? path === '/' : path.startsWith(
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f3ecd9" />
+    <meta name="theme-color" content="#f5e8cf" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="alternate" type="application/rss+xml" title="loman notes" href="/rss.xml" />
+    <link rel="preload" href="/fonts/patrick-hand-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/kalam-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/images/loman-snail.webp', canonical)} />
     <meta name="twitter:card" content="summary" />
     <title>{title}</title>
   </head>
-  <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">
-          <img src="/favicon.svg" alt="" />
-          <span>loman</span>
-        </a>
-
-        <nav aria-label="Primary navigation">
-          <a href="/field-notes/" aria-current={current('/field-notes/') ? 'page' : undefined}>field notes</a>
-          <a href="/projects/" aria-current={current('/projects/') ? 'page' : undefined}>projects</a>
-          <a href="/about/" aria-current={current('/about/') ? 'page' : undefined}>about</a>
-          <a href="https://github.com/its-loman">github ↗</a>
-        </nav>
-      </header>
-
-      <main class="paper">
-        <slot />
-      </main>
-
-      <footer class="site-footer">
-        <img src="/favicon.svg" alt="" />
-        <div>observe · tinker · understand</div>
-        <div class="copyright">© {new Date().getFullYear()} loman</div>
-      </footer>
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="notebook">
+      <div class="notebook-content">
+        <header class="site-header pencil-rule">
+          <a class="brand" href="/" aria-label="loman home">
+            <img src="/images/loman-snail.webp" width="108" height="72" alt="" />
+            <span class="scribble-underline">loman</span>
+          </a>
+          <nav aria-label="Primary navigation">
+            <a href="/field-notes/" class:list={[{ 'home-note': path === '/' }]} aria-current={current('/field-notes/') ? 'page' : undefined}>notes</a>
+            <a href="/projects/" aria-current={current('/projects/') ? 'page' : undefined}>projects</a>
+            <a href="/about/" aria-current={current('/about/') ? 'page' : undefined}>about</a>
+            <a href="/links/" aria-current={current('/links/') ? 'page' : undefined}>links</a>
+          </nav>
+        </header>
+        <main id="main" tabindex="-1"><slot /></main>
+        <footer class="site-footer pencil-rule">
+          <p>© {new Date().getFullYear()} loman <span>·</span> personal site <span>·</span> probably a work in progress</p>
+          <div><a href="/rss.xml">rss</a><span>·</span><a href="https://github.com/its-loman">github ↗</a><span>·</span><a href="#top">back to top ↑</a></div>
+        </footer>
+      </div>
     </div>
   </body>
 </html>
