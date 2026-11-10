@@ -1,50 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const projects = [
-  {
-    n: 'P–01',
-    title: 'Synapse',
-    desc: 'A front-end framework experiment around signals, immutable state, and rendering without a virtual DOM.',
-    href: 'https://github.com/its-loman/Synapse',
-  },
-  {
-    n: 'P–02',
-    title: 'Qwik Doc Viewer',
-    desc: 'Experiments around Qwik, documentation tooling, and framework ergonomics.',
-    href: 'https://github.com/its-loman/qwik-doc-viewer',
-  },
-  {
-    n: 'P–03',
-    title: 'RsLib Framework',
-    desc: 'Framework and tooling exploration centered around modern JavaScript architecture.',
-    href: 'https://github.com/its-loman/RsLib-Framework',
-  },
-  {
-    n: 'P–04',
-    title: 'Astro Demo',
-    desc: 'A place for poking at Astro, rendering strategies, and the modern web.',
-    href: 'https://github.com/its-loman/AstroDemo',
-  },
-];
+import Doodle from '../components/Doodle.astro';
+import { projects } from '../data/projects';
 ---
-
 <BaseLayout title="Projects — loman">
-  <section class="section page-lead">
-    <div class="catalogue-label">Selected specimens</div>
-    <h1>Things I've made while trying to understand something.</h1>
+  <section class="page-lead">
+    <div class="catalogue-label">from the workbench / ongoing</div>
+    <h1><span class="highlighter">Small strange tools.</span></h1>
+    <p>Things I've made while trying to understand something. Some useful, some mostly educational.</p>
   </section>
-
-  <section class="section project-list">
+  <section class="project-list" aria-label="Projects">
     {projects.map(project => (
       <article class="project">
-        <div class="project-number">{project.n}</div>
-        <div>
-          <h2>{project.title}</h2>
-          <p>{project.desc}</p>
-          <a href={project.href}>examine on GitHub ↗</a>
-        </div>
+        <Doodle name={project.icon} /><div><span class="note-meta">{project.n}</span><h2><a href={project.href}>{project.title}</a></h2><p>{project.desc}</p></div>
+        <a class="code-link" href={project.href} aria-label={`View ${project.title} code on GitHub`}>code ↗</a>
       </article>
     ))}
   </section>
+  <p class="margin-note">a finished thing teaches you what a prototype can't.</p>
 </BaseLayout>

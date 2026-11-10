@@ -2,6 +2,21 @@
 
 A personal site, blog, and working field guide built with Astro.
 
+The design is a worn, ruled notebook with a headphone-wearing snail, handwritten type,
+purple pencil marks, and small line drawings. The layout adapts from two columns on
+desktop to a single column on small screens. Existing field notes remain Markdown-driven.
+
+## Design assets
+
+- `public/images/loman-snail.webp`: transparent snail artwork based on the supplied logo.
+- `public/images/notebook-paper.webp`: paper texture based on the supplied page concept.
+- `public/favicon.png`: small snail favicon.
+- `public/fonts/`: self-hosted Kalam and Patrick Hand fonts, with their OFL licenses.
+
+The blue rules and red margin are CSS so they remain sharp as the page changes size.
+Project data is shared between the homepage and project index in `src/data/projects.ts`.
+The RSS feed at `/rss.xml` is generated from published field notes.
+
 ## Local development
 
 Requires Node 22+.
@@ -10,6 +25,9 @@ Requires Node 22+.
 npm install
 npm run dev
 ```
+
+The dev command uses Astro's `--ignore-lock` flag to stay in the foreground when
+run by an agent or preview supervisor, rather than automatically detaching.
 
 ## Build
 
